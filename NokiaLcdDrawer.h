@@ -32,10 +32,10 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		void setCenterCursor(int len, int y) {
 			int x;
 			
-			if( len > LCDWIDTH ) 
+			if( len > LCD_WIDTH ) 
 				x = 0;
 			else
-				x = ( LCDWIDTH - len ) / 2;
+				x = ( LCD_WIDTH - len ) / 2;
 			
 			lcd.setCursor(x, y);
 		}
@@ -61,7 +61,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		void drawMenu(Menu* menu) {
 			uint8_t color = 1;
 			
-			//lcd.drawLine(0, 7, LCDWIDTH, 7, 1) ;
+			//lcd.drawLine(0, 7, LCD_WIDTH, 7, 1) ;
 			drawCenterText(menu, 0);
 	
 			ListEntry* e = menu->getCollection();
@@ -94,7 +94,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 				y = 9 + 13 * i;
 				
 				if(i == before) {
-					lcd.fillRect(0, y, LCDWIDTH, 13, 1);
+					lcd.fillRect(0, y, LCD_WIDTH, 13, 1);
 					lcd.setTextColor(0);
 				} else
 					lcd.setTextColor(1);
@@ -104,7 +104,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 				
 				// If the string is longer than the screen, truncate it and leave three chars for the dots
 				// (e.g.: "this is longer than the screen" => "this is longer th...")
-				/*if(lcd.getStringWidth(text) > LCDWIDTH) {
+				/*if(lcd.getStringWidth(text) > LCD_WIDTH) {
 					strncpy(lineText, text, 16);
 					
 					lineText[16] = 0;
@@ -118,7 +118,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 					y += 3;
 				else {
 					// Draw secondary text
-					lcd.setCursor(LCDWIDTH - lcd.getStringWidth(secText), y + 6);
+					lcd.setCursor(LCD_WIDTH - lcd.getStringWidth(secText), y + 6);
 					lcd.print(secText);
 				}
 				
@@ -143,7 +143,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		void drawSelector(NumericSelector* selector) {
 			// Draw title
 			drawCenterText(selector, 0);
-			//lcd.drawLine(0, 8, LCDWIDTH, 8, 1) ;
+			//lcd.drawLine(0, 8, LCD_WIDTH, 8, 1) ;
 			
 			// Draw a rect around the value
 			lcd.drawRect(8, 18, 68, 14, 1) ;
@@ -167,7 +167,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		void draw(MenuItem* item) {
 			if(!item) return;
 			
-			lcd.clearDisplay();
+			lcd.clear();
 			lcd.setCursor(0, 0);
 
 			switch(item->getTypeId()) {
@@ -183,7 +183,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 					break;
 			}
 			
-			lcd.display();
+			lcd.update();
 		}
 };
 
