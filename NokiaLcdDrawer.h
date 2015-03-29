@@ -5,7 +5,7 @@
 
 class NokiaLcdDrawer : public MenuItemDrawer {
 
-	private:
+	protected:
 		LightPCD8544& lcd;
 		
 		
@@ -29,13 +29,13 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			return numLength;
 		}
 
-		void setCenterCursor(int len, int y) {
+		void setCenterCursor(int len, int y, int from = 0, int to = LCD_WIDTH) {
 			int x;
 			
-			if( len > LCD_WIDTH ) 
-				x = 0;
+			if( len > to - from ) 
+				x = to;
 			else
-				x = ( LCD_WIDTH - len ) / 2;
+				x = ( to - from - len ) / 2;
 			
 			lcd.setCursor(x, y);
 		}
@@ -52,9 +52,9 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 				lcd.print(text);
 			}
 		}
-		void drawCenterNumber(int num, int y) {
+		void drawCenterNumber(int num, int y,  int from = 0, int to = LCD_WIDTH) {
 			// A digit has an average width of 4px
-			setCenterCursor(4 * getNumLength(num), y);
+			setCenterCursor(4 * getNumLength(num), y, from, to);
 			lcd.print(num);
 		}
 	 
@@ -160,6 +160,9 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			lcd.println('>');
 		}
 
+		// Override this to extend functionalities
+		void virtual drawOther(MenuItem* item) {};
+
 	public:
 
 		NokiaLcdDrawer(LightPCD8544& lcd) : lcd(lcd) {}
@@ -181,6 +184,8 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 				case 's':
 					drawSelector((NumericSelector*)item);
 					break;
+				default:
+					drawOther(item);
 			}
 			
 			lcd.update();
