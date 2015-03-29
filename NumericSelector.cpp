@@ -30,16 +30,17 @@ int NumericSelector::deactivate() {
 }
 
 void NumericSelector::doNext() {
-    variable++;
+    if(variable == this->max)
+        variable = this->min;
+    else
+        variable++;
 
-    if(variable > max)
-        variable = min;
 }
 void NumericSelector::doPrev() {
-    variable--;
-
-    if(variable < min)
-        variable = max;
+    if(variable == this->min)
+        variable = this->max;
+    else
+        variable--;
 }
 
 MenuItem* NumericSelector::action() { 
