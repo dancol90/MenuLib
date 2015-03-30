@@ -33,9 +33,9 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			int x;
 			
 			if( len > to - from ) 
-				x = to;
+				x = from;
 			else
-				x = ( to - from - len ) / 2;
+				x = from + ( to - from - len ) / 2;
 			
 			lcd.setCursor(x, y);
 		}
