@@ -4,6 +4,7 @@ void MenuController::takeControl(MenuItem* item) {
     if (!item) { return; }
 
     currentItem = item;
+    exiting = 0;
 }
 
 MenuController::MenuController() {}

@@ -6,7 +6,7 @@
 //  Abstract class
 
 class MenuItem {
-    private:
+    protected:
         MenuItem* parent;
 
         const char* text;

@@ -16,7 +16,7 @@ class SerialDrawer : public MenuItemDrawer {
     private:
 
         void drawMenu(Menu* menu);
-        void drawAction(Action* action);
+        //void drawAction(Action<T>* action);
         void drawSelector(NumericSelector* selector);
 
     public:

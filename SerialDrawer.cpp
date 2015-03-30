@@ -30,10 +30,10 @@ void SerialDrawer::drawMenu(Menu* menu) {
         }
 }
 
-void SerialDrawer::drawAction(Action* action) {
+/*void SerialDrawer::drawAction(Action* action) {
     Serial.print("Action: ");
     Serial.println(action->getText());
-}
+}*/
 
 void SerialDrawer::drawSelector(NumericSelector* selector) {
     Serial.print("Selector: ");
@@ -51,10 +51,10 @@ void SerialDrawer::draw(MenuItem* item) {
             drawMenu((Menu*)item);
             break;
 
-        case 'a':                
+        /*case 'a':                
             drawAction((Action*)item);
             break;
-
+        */
         case 's':
             drawSelector((NumericSelector*)item);
             break;
