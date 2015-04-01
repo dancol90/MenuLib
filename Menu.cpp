@@ -23,24 +23,6 @@ MenuItem* Menu::addItem(MenuItem* item) {
     return item;
 }
 
-/*
-Menu* Menu::addMenu(const char* text, MenuEnterCallback cb) {
-    return (Menu*)addItem(new Menu(this, text, cb));
-}
-
-Action* Menu::addAction(const char* text) {
-    return (Action*)addItem(new Action(this, text));
-}
-
-CheckBox* Menu::addCheckBox(const char* text, short& variable) {
-    return (CheckBox*)addItem(new CheckBox(this, text, variable));
-}
-
-NumericSelector* Menu::addSelector(const char* text, int& variable, int min, int max) {
-    return (NumericSelector*)addItem(new NumericSelector(this, text, variable, min, max));
-}
-*/
-
 int Menu::activate() {
     if (this->enter_cb)
         this->enter_cb(this);
@@ -49,18 +31,24 @@ int Menu::activate() {
     selectedItem = firstEntry;
 }
 
-void Menu::doNext() { 
-    selectedItem = selectedItem->next;
+void Menu::doNext() {
+    do {
 
-    if(!selectedItem) 
-        selectedItem = firstEntry;
+        selectedItem = selectedItem->next;
+
+        if(!selectedItem) selectedItem = firstEntry;
+
+    } while(!selectedItem->item->isEnabled());
 }
 
 void Menu::doPrev() {
-    selectedItem = selectedItem->prev;
+    do {
+        
+        selectedItem = selectedItem->prev;
 
-    if(!selectedItem)
-        selectedItem = lastEntry;
+        if(!selectedItem) selectedItem = lastEntry;
+
+    } while(!selectedItem->item->isEnabled());
 }
 
 

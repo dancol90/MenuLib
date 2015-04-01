@@ -60,77 +60,74 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 	 
 		void drawMenu(Menu* menu) {
 			uint8_t color = 1;
+			uint8_t i = 0, y;
+			char* secText;
 			
 			//lcd.drawLine(0, 7, LCD_WIDTH, 7, 1) ;
 			drawCenterText(menu, 0);
 	
-			ListEntry* e = menu->getCollection();
+			ListEntry *e = menu->getCollection(), *first = e;
 	
 			if (!e) return;
 
-			// 4 righe per schermata
+			// Each screen contains 3 entry; when the third is reached, the next 3 will be shown
 
-			int currIndex = 0, before, y;
-			//char lineText[21];
-			char* secText;
+			// Find the right place where to start by scanning from the top.
+			do {
+				// Skip disabled items
+				if (e->item->isEnabled()) {					
+					if (i % 3 == 0)
+						first = e;
 
-			while(e->item != menu->getSelectedItem()) {
-				currIndex++;
+					i++;
+				}
 				
+				if (e == menu->getSelectedListEntry())
+					break;
+
 				e = e->next;
-				
-				// Controllo per sicurezza
-				if(!e) break;
-			}
-			
-			before = currIndex % 3;
+			} while(e);
 
-			for(int i = 0; i < before; i++)
-				e = e->prev;
+
+			e = first;
+			i = 0;
 
 			lcd.setCursor(0, 12);
 			
-			for(int i = 0; i < 3 && e; i++) {
-				y = 9 + 13 * i;
-				
-				if(i == before) {
-					lcd.fillRect(0, y, LCD_WIDTH, 13, 1);
-					lcd.setTextColor(0);
-				} else
-					lcd.setTextColor(1);
+			// Now actually draw the entries
+			while (e && i < 3) {
+				if (e->item->isEnabled()) {
 
-				//text    = e->item->getText();
-				secText = (char*)e->item->getSecondaryText();
-				
-				// If the string is longer than the screen, truncate it and leave three chars for the dots
-				// (e.g.: "this is longer than the screen" => "this is longer th...")
-				/*if(lcd.getStringWidth(text) > LCD_WIDTH) {
-					strncpy(lineText, text, 16);
+					y = 9 + 13 * i;
 					
-					lineText[16] = 0;
-					
-					strcat(lineText, "...");
-					
-					text = lineText;
-				}*/
-				
-				if(!secText)
-					y += 3;
-				else {
-					// Draw secondary text
-					lcd.setCursor(LCD_WIDTH - lcd.getStringWidth(secText), y + 6);
-					lcd.print(secText);
-				}
-				
-				// Draw item's text
-				lcd.setCursor(1, y);
+					if(e == menu->getSelectedListEntry()) {
+						lcd.fillRect(0, y, LCD_WIDTH, 13, 1);
+						lcd.setTextColor(0);
+					} else
+						lcd.setTextColor(1);
 
-				if (e->item->isTextFlash()) {
-					const __FlashStringHelper* text = reinterpret_cast<const __FlashStringHelper*>(e->item->getText());
-					lcd.print(text);
-				} else {
-					const char* text = e->item->getText();
-					lcd.print(text);
+					secText = (char*)e->item->getSecondaryText();
+
+					if(!secText)
+						y += 3;
+					else {
+						// Draw secondary text
+						lcd.setCursor(LCD_WIDTH - lcd.getStringWidth(secText), y + 6);
+						lcd.print(secText);
+					}
+					
+					// Draw item's text
+					lcd.setCursor(1, y);
+
+					if (e->item->isTextFlash()) {
+						const __FlashStringHelper* text = reinterpret_cast<const __FlashStringHelper*>(e->item->getText());
+						lcd.print(text);
+					} else {
+						const char* text = e->item->getText();
+						lcd.print(text);
+					}
+
+					i++;
 				}
 
 				e = e->next;

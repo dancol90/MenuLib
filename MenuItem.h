@@ -10,9 +10,9 @@ class MenuItem {
         MenuItem* parent;
 
         const char* text;
-        bool is_flash;
+        bool is_flash, enabled;
     public:
-        MenuItem(MenuItem* parent, const __FlashStringHelper* text) { this->parent = parent;  setText(text); }
+        MenuItem(MenuItem* parent, const __FlashStringHelper* text) : parent(parent), enabled(true) { setText(text); }
 
         virtual MenuItem* getParent() { return parent; }
         virtual void setParent(MenuItem* parent) { this->parent = parent; }
@@ -25,6 +25,8 @@ class MenuItem {
         virtual const char* getSecondaryText() { return NULL; }
 
         virtual char getTypeId() = 0;
+
+        virtual bool isEnabled() { return this->enabled; }
 
         // Called when the parent menu select the item
 

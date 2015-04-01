@@ -41,6 +41,8 @@ class Menu : public MenuItem {
 
         ListEntry* getCollection() { return firstEntry; }
         MenuItem*  getSelectedItem() { return selectedItem->item; }
+
+        ListEntry* getSelectedListEntry() { return selectedItem; }
         //void removeItem(int id) {}
 
 
