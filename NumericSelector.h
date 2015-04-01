@@ -28,8 +28,8 @@ class NumericSelector : public MenuItem {
 
         const char* getSecondaryText();
 
-        int activate();
-        int deactivate();
+        bool activate();
+        void deactivate();
 
         void doNext();
         void doPrev();

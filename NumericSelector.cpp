@@ -12,21 +12,19 @@ uint8_t NumericSelector::getMin()   { return min; }
 uint8_t NumericSelector::getMax()   { return max; }
 
 const char* NumericSelector::getSecondaryText() {
-    sprintf(valueStr, "<%d>", variable);
+    sprintf_P(valueStr, PSTR("<%d>"), variable);
 
     return valueStr;
 }
 
-int NumericSelector::activate() {
+bool NumericSelector::activate() {
     oldValue = variable;
 
     return 1;
 }
 
-int NumericSelector::deactivate() {
+void NumericSelector::deactivate() {
     variable = oldValue;
-
-    return 1;
 }
 
 void NumericSelector::doNext() {

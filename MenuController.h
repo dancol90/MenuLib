@@ -17,7 +17,7 @@ class MenuController {
         MenuItem* currentItem;
         MenuItemDrawer* drawer;
 
-        int exiting;
+        bool exiting;
 
 
     public:

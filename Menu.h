@@ -32,24 +32,16 @@ class Menu : public MenuItem {
 
         
         MenuItem* addItem(MenuItem* item);
-        /*
-        Menu*   addMenu(const char* text, MenuEnterCallback cb = NULL);
-        Action* addAction(const char* text);
-        NumericSelector* addSelector(const char* text, int& variable, int min, int max);
-        CheckBox* addCheckBox(const char* text, short& variable);
-        */
 
         ListEntry* getCollection() { return firstEntry; }
         MenuItem*  getSelectedItem() { return selectedItem->item; }
 
         ListEntry* getSelectedListEntry() { return selectedItem; }
-        //void removeItem(int id) {}
-
 
         // MenuItem fields
 
-        int activate();
-        int deactivate() { return 1; }
+        bool activate();
+        void deactivate() {}
 
         // Selects the next item in the list
         void doNext();

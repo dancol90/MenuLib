@@ -9,8 +9,8 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		LightPCD8544& lcd;
 		
 		
-		int getNumLength(int num) {
-			int numLength = 0, tmp;
+		uint8_t getNumLength(uint8_t num) {
+			uint8_t numLength = 0, tmp;
 			
 			if(num == 0) return 1;
 		
@@ -29,8 +29,8 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			return numLength;
 		}
 
-		void setCenterCursor(int len, int y, int from = 0, int to = LCD_WIDTH) {
-			int x;
+		void setCenterCursor(uint8_t len, uint8_t y, uint8_t from = 0, uint8_t to = LCD_WIDTH) {
+			uint8_t x;
 			
 			if( len > to - from ) 
 				x = from;
@@ -39,7 +39,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			
 			lcd.setCursor(x, y);
 		}
-		void drawCenterText(MenuItem* item, int y) {
+		void drawCenterText(MenuItem* item, uint8_t y) {
 			if (item->isTextFlash()) {
 				const __FlashStringHelper* text = reinterpret_cast<const __FlashStringHelper*>(item->getText());
 
@@ -52,7 +52,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 				lcd.print(text);
 			}
 		}
-		void drawCenterNumber(int num, int y,  int from = 0, int to = LCD_WIDTH) {
+		void drawCenterNumber(uint8_t num, uint8_t y,  uint8_t from = 0, uint8_t to = LCD_WIDTH) {
 			// A digit has an average width of 4px
 			setCenterCursor(4 * getNumLength(num), y, from, to);
 			lcd.print(num);

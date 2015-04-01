@@ -11,7 +11,7 @@
 
 class CheckBox : public MenuItem {
     public:
-        CheckBox(MenuItem* parent, const __FlashStringHelper* text, short& variable);
+        CheckBox(MenuItem* parent, const __FlashStringHelper* text, bool& variable);
 
         char getTypeId() { return 'c'; }
 
@@ -20,15 +20,15 @@ class CheckBox : public MenuItem {
         // MenuItem fields
 
         // When activated from parent menu, trigger the callback and don't take control.
-        int activate();
-        int deactivate() { return 0; };
+        bool activate();
+        void deactivate() {};
 
         // These three methods do nothing. Since CheckBox doesn't take control, they are never called.
         void doNext() { }
         void doPrev() { }
         MenuItem* action() { return NULL; }
     private:
-        short& value;
+        bool& value;
         // callback pointer
 };
 

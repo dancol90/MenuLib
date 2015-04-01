@@ -34,11 +34,11 @@ class MenuItem {
            Se vero:  l'oggetto vorrà prendere il controllo
            Se false: l'oggetto ritornerà subito il controllo al padre.
         */
-        virtual int activate() = 0;
+        virtual bool activate() = 0;
         
         // Triggered when the current action is cancelled. (Back button pressed)
         // TODO: Determine what this function can return
-        virtual int deactivate() = 0;
+        virtual void deactivate() = 0;
         
         // This events are triggerd only if the item is active.
         // ------

@@ -23,7 +23,7 @@ MenuItem* Menu::addItem(MenuItem* item) {
     return item;
 }
 
-int Menu::activate() {
+bool Menu::activate() {
     if (this->enter_cb)
         this->enter_cb(this);
 
