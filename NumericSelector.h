@@ -16,7 +16,7 @@ class NumericSelector : public MenuItem {
         uint8_t oldValue, min, max;
 
 
-        char valueStr[10];
+        char valueStr[5];
     public:
         NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max);
 
