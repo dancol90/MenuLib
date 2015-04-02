@@ -27,6 +27,7 @@ class MenuItem {
         virtual char getTypeId() = 0;
 
         virtual bool isEnabled() { return this->enabled; }
+        virtual void setState(bool enabled) { this->enabled = enabled; }
 
         // Called when the parent menu select the item
 
