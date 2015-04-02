@@ -11,14 +11,10 @@
 #define NumericSelector_h
 
 class NumericSelector : public MenuItem {
-    private:
-        uint8_t& variable;
-        uint8_t oldValue, min, max;
-
-
-        char valueStr[5];
     public:
-        NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max);
+        typedef void(*NumberSelectedCallback)(bool);
+
+        NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max, NumberSelectedCallback callback = NULL);
 
         uint8_t getValue();
         uint8_t getMin();
@@ -35,6 +31,15 @@ class NumericSelector : public MenuItem {
         void doPrev();
 
         MenuItem* action();
+        
+    private:
+        uint8_t& variable;
+        uint8_t oldValue, min, max;
+
+
+        char valueStr[5];
+
+        NumberSelectedCallback callback;
 };
 
 #endif

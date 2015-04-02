@@ -1,8 +1,10 @@
 #include "NumericSelector.h"
 
-NumericSelector::NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max) : MenuItem(parent, text), variable(variable) {
+NumericSelector::NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max, NumberSelectedCallback callback) : MenuItem(parent, text), variable(variable) {
     this->min = min;
     this->max = max;
+
+    this->callback = callback;
 
     oldValue = variable;
 };
@@ -25,6 +27,10 @@ bool NumericSelector::activate() {
 
 void NumericSelector::deactivate() {
     variable = oldValue;
+
+    // On cancel restore the value
+    if (this->callback)
+        this->callback(false);
 }
 
 void NumericSelector::doNext() {
@@ -33,14 +39,23 @@ void NumericSelector::doNext() {
     else
         variable++;
 
+    if (this->callback)
+        this->callback(false);
+
 }
 void NumericSelector::doPrev() {
     if(variable == this->min)
         variable = this->max;
     else
         variable--;
+
+    if (this->callback)
+        this->callback(false);
 }
 
-MenuItem* NumericSelector::action() { 
+MenuItem* NumericSelector::action() {
+    if (this->callback)
+        this->callback(true);
+
     return this->getParent(); 
 }

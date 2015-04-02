@@ -14,15 +14,12 @@ template <class T> class ParamAction : public MenuItem {
         typedef void(*ActionCallback)(T);
 
         ParamAction(MenuItem* parent, const __FlashStringHelper* text, ActionCallback callback, T data): MenuItem(parent, text) {
-            setCallback(callback);
+            this->callback = callback;
 
             this->data = data;
         }
 
         char getTypeId() { return 'a'; }
-
-        // Set the callback to execute.
-        void setCallback(ActionCallback callback) { this->callback = callback; }
 
         // MenuItem fields
 

@@ -4,6 +4,9 @@ void MenuController::takeControl(MenuItem* item) {
     if (!item) { return; }
 
     currentItem = item;
+
+    currentItem->activate();
+
     exiting = 0;
 }
 
