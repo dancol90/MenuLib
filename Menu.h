@@ -26,7 +26,7 @@ class Menu : public MenuItem {
     public:
         typedef void(*MenuEnterCallback)(Menu*);
 
-        Menu(MenuItem* parent, const __FlashStringHelper* text, MenuEnterCallback enter_cb = NULL);
+        Menu(MenuItem* parent, const FlashString* text, MenuEnterCallback enter_cb = NULL);
 
         char getTypeId() { return 'm'; }
 

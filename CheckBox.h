@@ -11,7 +11,7 @@
 
 class CheckBox : public MenuItem {
     public:
-        CheckBox(MenuItem* parent, const __FlashStringHelper* text, bool& variable);
+        CheckBox(MenuItem* parent, const FlashString* text, bool& variable);
 
         char getTypeId() { return 'c'; }
 

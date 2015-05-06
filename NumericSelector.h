@@ -14,7 +14,7 @@ class NumericSelector : public MenuItem {
     public:
         typedef void(*NumberSelectedCallback)(bool);
 
-        NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max, NumberSelectedCallback callback = NULL);
+        NumericSelector(MenuItem* parent, const FlashString* text, uint8_t& variable, uint8_t min, uint8_t max, NumberSelectedCallback callback = NULL);
 
         uint8_t getValue();
         uint8_t getMin();

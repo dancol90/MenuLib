@@ -1,6 +1,6 @@
 #include "NumericSelector.h"
 
-NumericSelector::NumericSelector(MenuItem* parent, const __FlashStringHelper* text, uint8_t& variable, uint8_t min, uint8_t max, NumberSelectedCallback callback) : MenuItem(parent, text), variable(variable) {
+NumericSelector::NumericSelector(MenuItem* parent, const FlashString* text, uint8_t& variable, uint8_t min, uint8_t max, NumberSelectedCallback callback) : MenuItem(parent, text), variable(variable) {
     this->min = min;
     this->max = max;
 

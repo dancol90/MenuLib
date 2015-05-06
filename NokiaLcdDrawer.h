@@ -41,7 +41,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		}
 		void drawCenterText(MenuItem* item, uint8_t y) {
 			if (item->isTextFlash()) {
-				const __FlashStringHelper* text = reinterpret_cast<const __FlashStringHelper*>(item->getText());
+				const FlashString* text = reinterpret_cast<const FlashString*>(item->getText());
 
 				setCenterCursor(lcd.getStringWidth(text), y);
 				lcd.print(text);
@@ -120,7 +120,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 					lcd.setCursor(1, y);
 
 					if (e->item->isTextFlash()) {
-						const __FlashStringHelper* text = reinterpret_cast<const __FlashStringHelper*>(e->item->getText());
+						const FlashString* text = reinterpret_cast<const FlashString*>(e->item->getText());
 						lcd.print(text);
 					} else {
 						const char* text = e->item->getText();

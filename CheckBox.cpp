@@ -1,6 +1,6 @@
 #include "CheckBox.h"
 
-CheckBox::CheckBox(MenuItem* parent, const __FlashStringHelper* text, bool& variable) : MenuItem(parent, text), value(variable) {}
+CheckBox::CheckBox(MenuItem* parent, const FlashString* text, bool& variable) : MenuItem(parent, text), value(variable) {}
 
 bool CheckBox::activate() { 
 	// Don't use the xor or the not method to avoid strange things if

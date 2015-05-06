@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(MenuItem* parent, const __FlashStringHelper* text, MenuEnterCallback enter_cb) : MenuItem(parent, text) {
+Menu::Menu(MenuItem* parent, const FlashString* text, MenuEnterCallback enter_cb) : MenuItem(parent, text) {
     this->firstEntry = NULL;
     this->lastEntry = NULL;
 

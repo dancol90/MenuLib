@@ -3,6 +3,12 @@
 
 #include <Arduino.h>
 
+#ifdef AVR
+#define FlashString __FlashStringHelper
+#else
+#define FlashString char
+#endif
+
 //  Abstract class
 
 class MenuItem {
@@ -12,14 +18,16 @@ class MenuItem {
         const char* text;
         bool is_flash, enabled;
     public:
-        MenuItem(MenuItem* parent, const __FlashStringHelper* text) : parent(parent), enabled(true) { setText(text); }
+        MenuItem(MenuItem* parent, const FlashString* text) : parent(parent), enabled(true) { setText(text); }
 
         virtual MenuItem* getParent() { return parent; }
         virtual void setParent(MenuItem* parent) { this->parent = parent; }
 
         virtual bool isTextFlash() { return is_flash; }
         virtual const char* getText() { return text; }
-        virtual void  setText(const __FlashStringHelper* text) { this->is_flash = 1; this->text = reinterpret_cast<PGM_P>(text); }
+        #ifdef AVR
+        virtual void  setText(const FlashString* text) { this->is_flash = 1; this->text = reinterpret_cast<PGM_P>(text); }
+        #endif
         virtual void  setText(const char *text)                { this->is_flash = 0; this->text = text; }
 
         virtual const char* getSecondaryText() { return NULL; }
