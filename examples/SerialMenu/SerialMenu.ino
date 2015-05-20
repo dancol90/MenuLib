@@ -1,17 +1,19 @@
+#include <Wire.h>
+
 #include <MenuLib.h>
-#include <NokiaLcdDrawer.h>
-#include <LightPCD8544.h>
 
-#include <SPI.h>
+#include <LightLCD.h>
+#include <LcdDrawer.h>
+#include <LightSSD1306.h>
 
-LightPCD8544 lcd = LightPCD8544(9, 10);
+LightSSD1306 lcd = LightSSD1306();
 
-Menu* root = new Menu(NULL, "Menu 1");
-NokiaLcdDrawer* dr = new NokiaLcdDrawer(lcd);
+Menu* root = new Menu(NULL, NULL);
+LcdDrawer* dr = new LcdDrawer(lcd);
 MenuController* menu = new MenuController(root, dr);
 
   
-int test = 1010;
+uint8_t test = 1010;
 char cmd;
 
 void setup() {
@@ -21,11 +23,15 @@ void setup() {
   lcd.begin();
   lcd.setContrast(50);
 
-  root->addAction("Do something");
-  Menu* sub = root->addMenu("Sub Menu");
-      sub->addAction("Aaa");
-      sub->addAction("bbb");
-      sub->addSelector("Test value", test, 0, 1024);
+  root->setText(F("Menu"));
+
+  root->addItem(new Action(root, F("Do something"), NULL));
+  Menu* sub = new Menu(root, F("Sub Menu"));
+      sub->addItem(new Action(sub, F("Aaa"), NULL));
+      sub->addItem(new Action(sub, F("bbb"), NULL));
+      sub->addItem(new NumericSelector(sub, F("Test value"), test, 0, 1024));
+      
+      root->addItem(sub);
   
   menu->draw();
 }

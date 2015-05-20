@@ -1,12 +1,9 @@
-//#include <Adafruit_GFX.h>
-//#include <Adafruit_PCD8544.h>
+#include <LightLCD.h>
 
-#include <LightPCD8544.h>
-
-class NokiaLcdDrawer : public MenuItemDrawer {
+class LcdDrawer : public MenuItemDrawer {
 
 	protected:
-		LightPCD8544& lcd;
+		LightLCD& lcd;
 		
 		
 		uint8_t getNumLength(uint8_t num) {
@@ -29,8 +26,11 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			return numLength;
 		}
 
-		void setCenterCursor(uint8_t len, uint8_t y, uint8_t from = 0, uint8_t to = LCD_WIDTH) {
+		void setCenterCursor(uint8_t len, uint8_t y, uint8_t from = 0, uint8_t to = 0) {
 			uint8_t x;
+
+			if (to == 0)
+				to = lcd.width();
 			
 			if( len > to - from ) 
 				x = from;
@@ -52,7 +52,10 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 				lcd.print(text);
 			}
 		}
-		void drawCenterNumber(uint8_t num, uint8_t y,  uint8_t from = 0, uint8_t to = LCD_WIDTH) {
+		void drawCenterNumber(uint8_t num, uint8_t y,  uint8_t from = 0, uint8_t to = 0) {
+			if (to == 0)
+				to = lcd.width();
+			
 			// A digit has an average width of 4px
 			setCenterCursor(4 * getNumLength(num), y, from, to);
 			lcd.print(num);
@@ -63,7 +66,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 			uint8_t i = 0, y;
 			char* secText;
 			
-			//lcd.drawLine(0, 7, LCD_WIDTH, 7, 1) ;
+			//lcd.drawLine(0, 7, lcd.width(), 7, 1) ;
 			drawCenterText(menu, 0);
 	
 			ListEntry *e = menu->getCollection(), *first = e;
@@ -101,7 +104,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 					y = 9 + 13 * i;
 					
 					if(e == menu->getSelectedListEntry()) {
-						lcd.fillRect(0, y, LCD_WIDTH, 13, 1);
+						lcd.fillRect(0, y, lcd.width(), 13, 1);
 						lcd.setTextColor(0);
 					} else
 						lcd.setTextColor(1);
@@ -112,7 +115,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 						y += 3;
 					else {
 						// Draw secondary text
-						lcd.setCursor(LCD_WIDTH - lcd.getStringWidth(secText), y + 6);
+						lcd.setCursor(lcd.width() - lcd.getStringWidth(secText), y + 6);
 						lcd.print(secText);
 					}
 					
@@ -140,7 +143,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 		void drawSelector(NumericSelector* selector) {
 			// Draw title
 			drawCenterText(selector, 0);
-			//lcd.drawLine(0, 8, LCD_WIDTH, 8, 1) ;
+			//lcd.drawLine(0, 8, lcd.width(), 8, 1) ;
 			
 			// Draw a rect around the value
 			lcd.drawRect(8, 18, 68, 14, 1) ;
@@ -162,7 +165,7 @@ class NokiaLcdDrawer : public MenuItemDrawer {
 
 	public:
 
-		NokiaLcdDrawer(LightPCD8544& lcd) : lcd(lcd) {}
+		LcdDrawer(LightLCD& lcd) : lcd(lcd) {}
 		
 		void draw(MenuItem* item) {
 			if(!item) return;
