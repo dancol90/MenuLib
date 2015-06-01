@@ -14,7 +14,7 @@ uint8_t NumericSelector::getMin()   { return min; }
 uint8_t NumericSelector::getMax()   { return max; }
 
 const char* NumericSelector::getSecondaryText() {
-    sprintf_P(valueStr, PSTR("<%d>"), variable);
+    snprintf_P(valueStr, 5, PSTR("<%d>"), variable);
 
     return valueStr;
 }

@@ -3,11 +3,7 @@
 
 #include <Arduino.h>
 
-#ifdef AVR
 #define FlashString __FlashStringHelper
-#else
-#define FlashString char
-#endif
 
 //  Abstract class
 
@@ -25,9 +21,7 @@ class MenuItem {
 
         virtual bool isTextFlash() { return is_flash; }
         virtual const char* getText() { return text; }
-        #ifdef AVR
         virtual void  setText(const FlashString* text) { this->is_flash = 1; this->text = reinterpret_cast<PGM_P>(text); }
-        #endif
         virtual void  setText(const char *text)                { this->is_flash = 0; this->text = text; }
 
         virtual const char* getSecondaryText() { return NULL; }

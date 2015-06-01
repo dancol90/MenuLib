@@ -4,6 +4,8 @@ class LcdDrawer : public MenuItemDrawer {
 
 	protected:
 		LightLCD& lcd;
+
+		uint8_t items_per_screen;
 		
 		
 		uint8_t getNumLength(uint8_t num) {
@@ -79,7 +81,7 @@ class LcdDrawer : public MenuItemDrawer {
 			do {
 				// Skip disabled items
 				if (e->item->isEnabled()) {					
-					if (i % 3 == 0)
+					if (i % items_per_screen == 0)
 						first = e;
 
 					i++;
@@ -98,7 +100,7 @@ class LcdDrawer : public MenuItemDrawer {
 			lcd.setCursor(0, 12);
 			
 			// Now actually draw the entries
-			while (e && i < 3) {
+			while (e && i < items_per_screen) {
 				if (e->item->isEnabled()) {
 
 					y = 9 + 13 * i;
@@ -138,7 +140,19 @@ class LcdDrawer : public MenuItemDrawer {
 			
 			lcd.setTextColor(1);
 		}
-		
+
+		#if defined PCD8544
+		    #define RECT_W 68
+		    #define RECT_H 14
+		    #define RECT_Y 18
+		#elif defined SSD1306
+		    #define RECT_W 68
+		    #define RECT_H 14
+		    #define RECT_Y 18
+		#endif
+
+		#define RECT_X (lcd.width() - RECT_W) / 2
+		#define TEXT_Y RECT_Y + (RECT_H - 7) / 2
 
 		void drawSelector(NumericSelector* selector) {
 			// Draw title
@@ -146,17 +160,17 @@ class LcdDrawer : public MenuItemDrawer {
 			//lcd.drawLine(0, 8, lcd.width(), 8, 1) ;
 			
 			// Draw a rect around the value
-			lcd.drawRect(8, 18, 68, 14, 1) ;
+			lcd.drawRect(RECT_X, RECT_Y, RECT_W, RECT_H, 1);
 		 
 			// Some decoration
-			lcd.setCursor(11, 21);
+			lcd.setCursor(RECT_X + 3, TEXT_Y);
 			lcd.print('<');
 			
 			// Guess the x pos to center the value number
-			drawCenterNumber(selector->getValue(), 21);
+			drawCenterNumber(selector->getValue(), TEXT_Y);
 			
 			// Still some decorations
-			lcd.setCursor(69, 21);
+			lcd.setCursor(RECT_X + RECT_W - 6, TEXT_Y);
 			lcd.println('>');
 		}
 
@@ -165,8 +179,8 @@ class LcdDrawer : public MenuItemDrawer {
 
 	public:
 
-		LcdDrawer(LightLCD& lcd) : lcd(lcd) {}
-		
+		LcdDrawer(LightLCD& lcd, uint8_t num_items) : lcd(lcd), items_per_screen(num_items) {}
+
 		void draw(MenuItem* item) {
 			if(!item) return;
 			
