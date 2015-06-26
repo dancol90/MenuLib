@@ -13,9 +13,13 @@ template <class T> class ParamAction : public MenuItem {
     public:
         typedef void(*ActionCallback)(T);
 
+        ParamAction(MenuItem* parent, const char* text, ActionCallback callback, T data): MenuItem(parent, text) {
+            this->callback = callback;
+            this->data = data;
+        }
+
         ParamAction(MenuItem* parent, const FlashString* text, ActionCallback callback, T data): MenuItem(parent, text) {
             this->callback = callback;
-
             this->data = data;
         }
 
@@ -47,8 +51,12 @@ class Action : public MenuItem {
     public:
         typedef void(*ActionCallback)(void);
 
+        Action(MenuItem* parent, const char* text, ActionCallback callback): MenuItem(parent, text) {
+            setCallback(callback);
+        }
+
         Action(MenuItem* parent, const FlashString* text, ActionCallback callback): MenuItem(parent, text) {
-            setCallback(callback);;
+            setCallback(callback);
         }
 
         char getTypeId() { return 'a'; }

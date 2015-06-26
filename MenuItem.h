@@ -15,6 +15,7 @@ class MenuItem {
         bool is_flash, enabled;
     public:
         MenuItem(MenuItem* parent, const FlashString* text) : parent(parent), enabled(true) { setText(text); }
+        MenuItem(MenuItem* parent, const char* text)        : parent(parent), enabled(true) { setText(text); }
 
         virtual MenuItem* getParent() { return parent; }
         virtual void setParent(MenuItem* parent) { this->parent = parent; }

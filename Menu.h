@@ -32,6 +32,7 @@ class Menu : public MenuItem {
 
         
         MenuItem* addItem(MenuItem* item);
+        void clearItems();
 
         ListEntry* getCollection() { return firstEntry; }
         MenuItem*  getSelectedItem() { return selectedItem->item; }

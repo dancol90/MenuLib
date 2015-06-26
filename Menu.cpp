@@ -23,6 +23,22 @@ MenuItem* Menu::addItem(MenuItem* item) {
     return item;
 }
 
+void Menu::clearItems() {
+    ListEntry* e = this->firstEntry;
+    ListEntry* next;
+
+    while(e) {
+        next = e->next;
+
+        delete e;
+
+        e = next;
+    }
+
+    this->firstEntry = NULL;
+    this->lastEntry  = NULL;
+}
+
 bool Menu::activate() {
     if (this->enter_cb)
         this->enter_cb(this);

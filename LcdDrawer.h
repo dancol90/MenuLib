@@ -1,3 +1,7 @@
+#ifndef __lcd_drawer_h__
+#define __lcd_drawer_h__
+
+#include <MenuLib.h>
 #include <LightLCD.h>
 
 class LcdDrawer : public MenuItemDrawer {
@@ -206,3 +210,4 @@ class LcdDrawer : public MenuItemDrawer {
 		}
 };
 
+#endif
