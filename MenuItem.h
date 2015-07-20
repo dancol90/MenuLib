@@ -62,6 +62,8 @@ class MenuItem {
         // Se ritorna this o NULL, l'oggetto stesso manterrà il controllo.
         virtual MenuItem* action() = 0;
 
+        virtual bool back() { return true; }
+
         virtual ~MenuItem() {}
 };
 

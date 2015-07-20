@@ -45,6 +45,9 @@ void MenuController::select() {
 void MenuController::back() {
     if(!currentItem) return;
     
+    if(!currentItem->back())
+        return;
+    
     currentItem->deactivate();
 
     if (currentItem->getParent())
